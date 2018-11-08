@@ -71,6 +71,17 @@ class JWT {
      @return String
      */
     public static function sign(payload:Dynamic, secret:String, ?replacer:Dynamic->Dynamic->Dynamic, ?header:JWTHeader):String {
+        return signPreconstructed(Json.stringify(payload, replacer), secret, header);
+    }
+
+    /**
+     Creates a signed JWT
+     @param header - header information. If null, will default to HS256 encryption
+     @param payload - The data to include
+     @param secret - The secret to generate the signature with
+     @return String
+     */
+    public static function signPreconstructed(payload:String, secret:String, ?header:JWTHeader):String {
         if(header == null) {
             header = {
                 alg: JWTAlgorithm.HS256,
@@ -81,9 +92,8 @@ class JWT {
         var alg:JWTAlgorithm = header.alg == null ? JWTAlgorithm.HS256 : header.alg;
 
         var h:String = Json.stringify(header);
-        var p:String = Json.stringify(payload, replacer);
         var hb64:String = base64url_encode(Bytes.ofString(h));
-        var pb64:String = base64url_encode(Bytes.ofString(p));
+        var pb64:String = base64url_encode(Bytes.ofString(payload));
         var sb:Bytes = switch(alg) {
             case JWTAlgorithm.HS256: signature(alg, hb64 + "." + pb64, secret);
             default: throw 'The ${cast(alg)} algorithm isn\'t supported yet!';
