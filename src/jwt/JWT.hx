@@ -28,6 +28,11 @@ enum JWTResult<T:Dynamic> {
     Malformed;
 }
 
+@:enum abstract JWTPart(Int) from Int {
+    final Header = 0;
+    final Payload = 1;
+}
+
 /**
  All JWT functionality is implemented here (namely signing and verifying tokens)
  */
@@ -132,13 +137,14 @@ class JWT {
     }
 
     /**
-     Extracts the payload from a JWT, throwing an exception if it is malformed
+     Extracts a part (Header or Payload) from a JWT, throwing an exception if it is malformed
      @param jwt - The token to extract from
      @return T
      */
-    public static function extract<T:Dynamic>(jwt:String):T {
+    public static function extract<T:Dynamic>(jwt:String, part:JWTPart=JWTPart.Payload):T {
         var parts:Array<String> = jwt.split(".");
         if(parts.length != 3) throw 'Malformed JWT!';
-        return Json.parse(base64url_decode(parts[1]).toString());
+        return Json.parse(base64url_decode(parts[cast part]).toString());
     }
+
 }
