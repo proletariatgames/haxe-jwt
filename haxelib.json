@@ -1,13 +1,16 @@
 {
     "name": "jwt",
     "classPath": "src",
-    "url" : "https://github.com/FuzzyWuzzie/haxe-jwt",
+    "url" : "https://github.com/proletariatgames/haxe-jwt",
     "license": "Apache",
     "classPath": "src",
     "tags": ["cross", "utility", "web"],
     "description": "A JSON Web Token library for native Haxe.",
     "version": "1.3.0",
     "releasenote": "Allow unverified data to be decoded",
-    "contributors": ["FuzzyWuzzie"],
+    "contributors": [
+        "FuzzyWuzzie",
+        "ProletariatGames"
+    ],
     "dependencies": { }
 }

@@ -4,8 +4,6 @@
 
 A [JSON Web Token](https://jwt.io/#debugger) library for native [Haxe](http://haxe.org/).
 
-API docs are available here: [https://fuzzywuzzie.github.io/haxe-jwt/](https://fuzzywuzzie.github.io/haxe-jwt/).
-
 ## Features
 
 * Signing (generating) tokens
@@ -50,6 +48,20 @@ switch(result) {
     case Invalid: throw 'The token was invalid, you dummy!';
 }
 
+```
+
+### Extracting Headers and Claims
+
+```haxe
+import jwt.JWT;
+
+// ...
+
+typedef HeaderStruct = {};
+typedef PayloadStruct = {};
+
+var header:HeaderStruct = JWT.extract(token, JWTPart.Header);
+var payload:PayloadStruct = JWT.extract(token, JWTPart.Payload);
 ```
 
 ## Change Log
